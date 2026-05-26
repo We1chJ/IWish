@@ -1,54 +1,27 @@
 {
   "permissions": {
-    "allow": [
-      "Bash(git add *)",
-      "Bash(git commit *)",
-      "Bash(git push *)",
-      "Bash(git pull *)",
-      "Bash(git status)",
-      "Bash(git log *)",
-      "Bash(git branch *)",
-      "Bash(git checkout *)",
-      "Bash(git diff *)",
-      "Bash(ls *)",
-      "Bash(npm *)",
-      "Bash(npx *)",
-      "Bash(yarn *)",
-      "Bash(pnpm *)",
-      "Bash(node *)",
-      "Bash(cat *)",
-      "Bash(find *)",
-      "Bash(grep *)",
-      "Bash(touch *)",
-      "Bash(mkdir *)",
-      "Bash(pwd)",
-      "Bash(echo *)"
-    ],
-    "deny": [
-      "Bash(rm -rf *)",
-      "Bash(rm -f *)",
-      "Bash(rm *)",
-      "Bash(git reset --hard *)",
-      "Bash(git clean -f *)",
-      "Bash(git branch -D *)",
-      "Bash(git push --force *)",
-      "Bash(git push -f *)",
-      "Bash(dd *)",
-      "Bash(mkfs *)",
-      "Bash(wipefs *)"
-    ]
-  },
-  "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "echo '{\"systemMessage\": \"✓ Editing complete\"}'"
-          }
-        ]
-      }
-    ]
+    "bash": {
+      "allowlist": [
+        "npm install",
+        "npm run dev",
+        "npm run build",
+        "npm run lint",
+        "npm audit",
+        "node",
+        "git status",
+        "git add",
+        "git commit",
+        "git log",
+        "git branch",
+        "git diff",
+        "git checkout",
+        "curl http://localhost:*"
+      ]
+    },
+    "read": {
+      "allowlist": [
+        "**/*"
+      ]
+    }
   }
 }
