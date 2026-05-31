@@ -1,84 +1,91 @@
 import Link from 'next/link'
+import { createClient } from '@/utils/supabase/server'
+import WishCard from '@/components/WishCard'
+import LogoutButton from '@/components/LogoutButton'
 
-export default function Feed() {
+export const revalidate = 0
+
+export default async function FeedPage() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  const { data: wishes } = await supabase
+    .from('wishes')
+    .select('*, profiles(username)')
+    .order('created_at', { ascending: false })
+    .limit(60)
+
+  let userUpvotes: string[] = []
+  if (user) {
+    const { data } = await supabase
+      .from('upvotes')
+      .select('wish_id')
+      .eq('user_id', user.id)
+    userUpvotes = data?.map(u => u.wish_id) ?? []
+  }
+
+  const username = user?.user_metadata?.username as string | undefined
+
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="border-b border-gray-200 bg-white sticky top-0">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold text-blue-600">
-            IWish
-          </Link>
-          <nav className="flex gap-4">
-            <Link href="/auth/login" className="text-gray-600 hover:text-gray-900 font-medium">
-              Log In
-            </Link>
-            <Link
-              href="/auth/signup"
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-medium"
-            >
-              Sign Up
-            </Link>
-          </nav>
-        </div>
+    <>
+      <header className="iw-header" style={{ position: 'sticky', top: 0, background: 'var(--paper)', zIndex: 10, borderBottom: 'var(--line)' }}>
+        <Link className="iw-logo" href="/">
+          <span className="mark">★</span>IWish
+        </Link>
+        <nav className="iw-nav">
+          {user ? (
+            <>
+              <Link href="/wishes/new">+ post a wish</Link>
+              {username && <Link href={`/profile/${username}`}>@{username}</Link>}
+              <LogoutButton />
+            </>
+          ) : (
+            <>
+              <Link href="/auth/login">Log in</Link>
+              <Link className="iw-nav-cta" href="/auth/signup">Join →</Link>
+            </>
+          )}
+        </nav>
       </header>
 
-      <main className="flex-grow max-w-4xl mx-auto w-full px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Wishes Feed</h1>
-          <p className="text-gray-600">
-            Browse what people are sharing. Sign up to upvote and post your own wishes!
-          </p>
+      <main style={{ maxWidth: '680px', margin: '0 auto', padding: '40px 20px' }}>
+        <div style={{ marginBottom: '32px' }}>
+          <p className="iw-kicker">THE WALL</p>
+          <h1 style={{ fontSize: '40px', fontWeight: 400, margin: '0 0 8px' }}>
+            What people have &amp; wish for
+          </h1>
+          {!user && (
+            <p style={{ fontSize: '18px', color: '#555', margin: 0 }}>
+              <Link href="/auth/signup" className="iw-footer-link">Join</Link> to upvote or post your own.
+            </p>
+          )}
         </div>
 
-        {/* Sample Wishes */}
-        <div className="space-y-4">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition">
-              <div className="flex justify-between items-start mb-3">
-                <div>
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className="font-semibold text-gray-900">user{i}</span>
-                    <span className={`px-2 py-1 rounded text-sm font-medium ${
-                      i % 2 === 0
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-blue-100 text-blue-800'
-                    }`}>
-                      {i % 2 === 0 ? 'Have' : 'Want'}
-                    </span>
-                  </div>
-                  <p className="text-gray-700">
-                    {i % 2 === 0
-                      ? 'I have a vintage leather jacket that I no longer wear'
-                      : 'I want to learn to play the guitar'}
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <button className="text-gray-500 hover:text-blue-600 font-medium cursor-pointer">
-                  👍 {5 + i * 3} upvotes
-                </button>
-                <span className="text-sm text-gray-500">2 hours ago</span>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-12 text-center text-gray-600">
-          <p>Want to post your own wishes?</p>
-          <Link
-            href="/auth/signup"
-            className="text-blue-600 hover:underline font-semibold"
-          >
-            Sign up now
-          </Link>
-        </div>
+        {wishes && wishes.length > 0 ? (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            {wishes.map(wish => (
+              <WishCard
+                key={wish.id}
+                wish={wish as Parameters<typeof WishCard>[0]['wish']}
+                initialUpvoted={userUpvotes.includes(wish.id)}
+                userId={user?.id ?? null}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="iw-card" style={{ textAlign: 'center', padding: '50px 30px' }}>
+            <p style={{ fontSize: '22px', margin: '0 0 16px' }}>The wall is empty.</p>
+            <Link className="iw-btn primary" href="/auth/signup">Be the first to post →</Link>
+          </div>
+        )}
       </main>
 
-      <footer className="border-t border-gray-200 bg-white mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-gray-600">
-          <p>&copy; 2024 IWish. Share your wishes with the world.</p>
-        </div>
+      <footer className="iw-footer">
+        <Link className="iw-logo" href="/">
+          <span className="mark" style={{ width: '24px', height: '24px', fontSize: '15px' }}>★</span>IWish
+        </Link>
+        <span>made for wishing &amp; sharing · 2026</span>
       </footer>
-    </div>
+    </>
   )
 }

@@ -320,6 +320,83 @@ a { color: inherit; text-decoration: none; }
   .iw-nav { display: none; }
 }
 
+/* feed cards */
+.iw-card {
+  border: var(--line);
+  padding: 20px 22px;
+  background: var(--paper);
+}
+.iw-card-wish { border-style: dashed; }
+.iw-card .type-flag { margin-bottom: 10px; }
+.iw-card-body { font-size: 21px; margin: 0 0 16px; line-height: 1.4; }
+.iw-card-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  color: #555;
+}
+.iw-card-handle { font-family: var(--caps); letter-spacing: 0.5px; font-size: 15px; }
+.iw-card-time { font-size: 15px; color: #888; }
+.iw-upvote {
+  background: none;
+  border: 1.5px solid #bbb;
+  border-radius: 30px;
+  padding: 3px 14px;
+  font-family: var(--hand);
+  font-size: 17px;
+  cursor: pointer;
+  color: #555;
+  transition: border-color 0.1s, color 0.1s;
+}
+.iw-upvote:hover { border-color: var(--ink); color: var(--ink); }
+.iw-upvote.active { border-color: var(--ink); color: var(--ink); font-weight: bold; }
+
+/* auth modal */
+.iw-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  display: grid;
+  place-items: center;
+  z-index: 100;
+  padding: 20px;
+}
+.iw-modal {
+  background: var(--paper);
+  border: var(--line);
+  padding: 36px 36px 32px;
+  max-width: 400px;
+  width: 100%;
+  position: relative;
+}
+.iw-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  line-height: 1;
+  color: #777;
+  font-family: var(--hand);
+}
+.iw-modal-close:hover { color: var(--ink); }
+
+/* nav text button (e.g. logout) */
+.iw-nav-text-btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  font-family: var(--hand);
+  font-size: 21px;
+  color: var(--ink);
+  padding: 0 0 3px;
+}
+.iw-nav-text-btn:hover { border-bottom-color: var(--ink); }
+
 /* auth forms */
 .iw-auth-card {
   width: 100%;
