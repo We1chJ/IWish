@@ -397,6 +397,26 @@ a { color: inherit; text-decoration: none; }
 }
 .iw-nav-text-btn:hover { border-bottom-color: var(--ink); }
 
+/* wish form toggle */
+.iw-toggle {
+  border: var(--line);
+  border-radius: 30px;
+  padding: 8px 22px;
+  font-family: var(--caps);
+  font-size: 17px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  background: var(--paper);
+  color: #666;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: background 0.1s, color 0.1s;
+}
+.iw-toggle:first-child { border-style: dashed; }
+.iw-toggle.selected { background: var(--ink); color: var(--paper); border-style: solid; }
+.iw-toggle:not(.selected):hover { color: var(--ink); }
+
 /* auth forms */
 .iw-auth-card {
   width: 100%;
