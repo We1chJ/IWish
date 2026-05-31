@@ -11,14 +11,14 @@ export default async function NewWishPage() {
 
   return (
     <>
-      <header className="iw-header">
+      <div className="iw-header-wrap"><header className="iw-header">
         <Link className="iw-logo" href="/">
           <span className="mark">★</span>IWish
         </Link>
         <nav className="iw-nav">
           <Link href="/feed">← back to wall</Link>
         </nav>
-      </header>
+      </header></div>
 
       <main style={{ maxWidth: '600px', margin: '0 auto', padding: '50px 20px' }}>
         <p className="iw-kicker">NEW POST</p>

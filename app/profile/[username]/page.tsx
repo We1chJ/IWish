@@ -36,7 +36,7 @@ export default async function ProfilePage({ params }: { params: { username: stri
 
   return (
     <>
-      <header className="iw-header">
+      <div className="iw-header-wrap"><header className="iw-header">
         <Link className="iw-logo" href="/">
           <span className="mark">★</span>IWish
         </Link>
@@ -44,7 +44,7 @@ export default async function ProfilePage({ params }: { params: { username: stri
           <Link href="/feed">← wall</Link>
           {isOwn && <Link className="iw-nav-cta" href="/wishes/new">+ post</Link>}
         </nav>
-      </header>
+      </header></div>
 
       <main style={{ maxWidth: '720px', margin: '0 auto', padding: '50px 20px' }}>
         <div style={{ marginBottom: '40px' }}>

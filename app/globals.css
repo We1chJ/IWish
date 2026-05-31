@@ -27,10 +27,19 @@ a { color: inherit; text-decoration: none; }
 .rough, .squiggle { filter: url(#sq); }
 
 /* header */
+.iw-header-wrap {
+  background: var(--paper);
+  border-bottom: var(--line);
+}
+.iw-header-wrap.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
 .iw-header {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 34px 40px 10px;
+  padding: 26px 40px 26px;
   display: flex;
   align-items: center;
   justify-content: space-between;

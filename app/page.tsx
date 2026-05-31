@@ -18,6 +18,7 @@ export default function Home() {
 
       <LandingEffects />
 
+      <div className="iw-header-wrap">
       <header className="iw-header">
         <Link className="iw-logo" href="/">
           <span className="mark">★</span>IWish
@@ -29,6 +30,7 @@ export default function Home() {
           <Link className="iw-nav-cta" href="/auth/signup">Join →</Link>
         </nav>
       </header>
+      </div>
 
       <section className="iw-hero">
         <div>

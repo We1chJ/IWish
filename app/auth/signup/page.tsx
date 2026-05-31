@@ -37,11 +37,11 @@ export default function SignUp() {
 
   return (
     <>
-      <header className="iw-header">
+      <div className="iw-header-wrap"><header className="iw-header">
         <Link className="iw-logo" href="/">
           <span className="mark">★</span>IWish
         </Link>
-      </header>
+      </header></div>
 
       <main style={{ display: 'flex', justifyContent: 'center', padding: '60px 20px' }}>
         <div className="iw-auth-card">

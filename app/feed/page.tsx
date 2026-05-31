@@ -24,11 +24,20 @@ export default async function FeedPage() {
     userUpvotes = data?.map(u => u.wish_id) ?? []
   }
 
-  const username = user?.user_metadata?.username as string | undefined
+  let username: string | null = null
+  if (user) {
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('username')
+      .eq('id', user.id)
+      .single()
+    username = profile?.username ?? null
+  }
 
   return (
     <>
-      <header className="iw-header" style={{ position: 'sticky', top: 0, background: 'var(--paper)', zIndex: 10, borderBottom: 'var(--line)' }}>
+      <div className="iw-header-wrap sticky">
+      <header className="iw-header">
         <Link className="iw-logo" href="/">
           <span className="mark">★</span>IWish
         </Link>
@@ -47,6 +56,7 @@ export default async function FeedPage() {
           )}
         </nav>
       </header>
+      </div>
 
       <main style={{ maxWidth: '680px', margin: '0 auto', padding: '40px 20px' }}>
         <div style={{ marginBottom: '32px' }}>

@@ -28,14 +28,14 @@ export default async function WishPage({ params }: { params: { id: string } }) {
 
   return (
     <>
-      <header className="iw-header">
+      <div className="iw-header-wrap"><header className="iw-header">
         <Link className="iw-logo" href="/">
           <span className="mark">★</span>IWish
         </Link>
         <nav className="iw-nav">
           <Link href="/feed">← back to wall</Link>
         </nav>
-      </header>
+      </header></div>
 
       <main style={{ maxWidth: '600px', margin: '50px auto', padding: '0 20px' }}>
         <WishCard
