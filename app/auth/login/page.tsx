@@ -1,60 +1,88 @@
+'use client'
+
+import { useState } from 'react'
 import Link from 'next/link'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { createClient } from '@/utils/supabase/client'
 
 export default function Login() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setError(null)
+    setLoading(true)
+
+    const supabase = createClient()
+    const { error } = await supabase.auth.signInWithPassword({ email, password })
+
+    setLoading(false)
+    if (error) {
+      setError(error.message)
+    } else {
+      const next = searchParams.get('next') ?? '/feed'
+      router.push(next)
+      router.refresh()
+    }
+  }
+
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="border-b border-gray-200 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold text-blue-600">
-            IWish
-          </Link>
-        </div>
+    <>
+      <header className="iw-header">
+        <Link className="iw-logo" href="/">
+          <span className="mark">★</span>IWish
+        </Link>
       </header>
 
-      <main className="flex-grow flex items-center justify-center py-12 px-4">
-        <div className="w-full max-w-md bg-white rounded-lg border border-gray-200 p-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h1>
-          <p className="text-gray-600 mb-6">Log in to your IWish account.</p>
+      <main style={{ display: 'flex', justifyContent: 'center', padding: '60px 20px' }}>
+        <div className="iw-auth-card">
+          <h1 className="iw-auth-title">Welcome back</h1>
+          <p className="iw-auth-sub">Log in to post wishes and upvote others.</p>
 
-          <form className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Email
-              </label>
+          {searchParams.get('error') === 'auth' && (
+            <p className="iw-auth-error">That link expired — try signing in again.</p>
+          )}
+          {error && <p className="iw-auth-error">{error}</p>}
+
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+            <div className="iw-field">
+              <label className="iw-label">Email</label>
               <input
+                className="iw-input"
                 type="email"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="you@example.com"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                required
               />
             </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Password
-              </label>
+            <div className="iw-field">
+              <label className="iw-label">Password</label>
               <input
+                className="iw-input"
                 type="password"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="••••••••"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                required
               />
             </div>
-
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 font-semibold mt-6"
-            >
-              Log In
+            <button className="iw-btn primary" type="submit" disabled={loading} style={{ marginTop: '6px', justifyContent: 'center' }}>
+              {loading ? 'Logging in…' : 'Log in →'}
             </button>
           </form>
 
-          <p className="text-center text-gray-600 mt-6">
-            Don't have an account?{' '}
-            <Link href="/auth/signup" className="text-blue-600 hover:underline font-medium">
-              Sign up
-            </Link>
+          <p className="iw-auth-foot">
+            No account yet?{' '}
+            <Link href="/auth/signup" className="iw-footer-link">Sign up</Link>
           </p>
         </div>
       </main>
-    </div>
+    </>
   )
 }
