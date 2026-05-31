@@ -1,92 +1,121 @@
 import Link from 'next/link'
+import LandingEffects from '@/components/LandingEffects'
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Header */}
-      <header className="border-b border-gray-200 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <div className="text-2xl font-bold text-blue-600">IWish</div>
-          <nav className="flex gap-4">
-            <Link
-              href="/auth/login"
-              className="text-gray-600 hover:text-gray-900 font-medium"
-            >
-              Log In
-            </Link>
-            <Link
-              href="/auth/signup"
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-medium"
-            >
-              Sign Up
-            </Link>
-          </nav>
-        </div>
+    <>
+      {/* Squigglevision SVG filter */}
+      <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
+        <filter id="sq">
+          <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves={2} seed={2} result="n" />
+          <feDisplacementMap in="SourceGraphic" in2="n" scale={2.6} xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+        <filter id="sqf">
+          <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves={2} seed={2} result="n" />
+          <feDisplacementMap in="SourceGraphic" in2="n" scale={3} xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </svg>
+
+      <LandingEffects />
+
+      <header className="iw-header">
+        <Link className="iw-logo" href="/">
+          <span className="mark">★</span>IWish
+        </Link>
+        <nav className="iw-nav">
+          <a href="#how">How it works</a>
+          <a href="#types">The two cards</a>
+          <a href="#wall">The wall</a>
+          <Link className="iw-nav-cta" href="/auth/signup">Join →</Link>
+        </nav>
       </header>
 
-      {/* Hero Section */}
-      <main className="flex-grow">
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="text-center">
-            <h1 className="text-5xl sm:text-6xl font-bold text-gray-900 mb-6">
-              Share What You Have & Want
-            </h1>
-            <p className="text-xl sm:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto">
-              Post what you have and what you want. Upvote wishes that resonate with you.
-              Discover what others are looking for.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-              <Link
-                href="/auth/signup"
-                className="bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 font-semibold text-lg transition"
-              >
-                Get Started
-              </Link>
-              <Link
-                href="/feed"
-                className="bg-gray-200 text-gray-900 px-8 py-4 rounded-lg hover:bg-gray-300 font-semibold text-lg transition"
-              >
-                Browse Wishes
-              </Link>
-            </div>
+      <section className="iw-hero">
+        <div>
+          <h1>Say what you <span className="u">wish</span> for.<br />Show what you <span className="u">have</span>.</h1>
+          <p className="sub">A little wall where people post the things they want in life — and the things they already have that someone else is dreaming of.</p>
+          <div className="actions">
+            <Link className="iw-btn primary" href="/auth/signup">Start posting</Link>
+            <a className="iw-btn" href="#how">See how it works</a>
+            <span className="iw-hint">set up your wall in a minute →</span>
           </div>
-
-          {/* Features Grid */}
-          <div className="grid md:grid-cols-3 gap-8 mt-20">
-            <div className="bg-white p-8 rounded-lg border border-gray-200 hover:shadow-lg transition">
-              <div className="text-4xl mb-4">📋</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Have & Want</h3>
-              <p className="text-gray-600">
-                Share what you currently have and what you're looking for. Keep your lists updated.
-              </p>
-            </div>
-
-            <div className="bg-white p-8 rounded-lg border border-gray-200 hover:shadow-lg transition">
-              <div className="text-4xl mb-4">👍</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Vote & Discover</h3>
-              <p className="text-gray-600">
-                Upvote the wishes you care about. See what others value most in their lives.
-              </p>
-            </div>
-
-            <div className="bg-white p-8 rounded-lg border border-gray-200 hover:shadow-lg transition">
-              <div className="text-4xl mb-4">🔍</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Search & Connect</h3>
-              <p className="text-gray-600">
-                Find who wants what after achieving their goals. Make meaningful discoveries.
-              </p>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-200 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-gray-600">
-          <p>&copy; 2024 IWish. Share your wishes with the world.</p>
         </div>
+        <div className="iw-hero-cards">
+          <div className="demo-card card-wish rough">
+            <span className="type-flag"><span className="ic">○</span> I WISH</span>
+            <div className="pic"><span className="cap">a tiny cabin in the woods</span></div>
+            <h4>A cabin to disappear to</h4>
+            <p className="desc">Somewhere quiet with a wood stove and zero wifi. One day.</p>
+            <div className="foot"><span className="iw-tag">travel</span><span>♡ 42 also wish this</span></div>
+          </div>
+          <div className="demo-card card-have rough">
+            <span className="type-flag"><span className="ic">●</span> I HAVE</span>
+            <div className="pic"><span className="cap">grandpa&apos;s old film camera</span></div>
+            <h4>A 1973 film camera</h4>
+            <p className="desc">Still works. Happy to teach someone how to load it.</p>
+            <div className="foot"><span className="iw-tag">objects</span><span>● @mira · online</span></div>
+          </div>
+        </div>
+      </section>
+
+      <hr className="iw-rule" />
+
+      <section className="iw-section" id="how">
+        <p className="iw-kicker">HOW IT WORKS</p>
+        <h2>Three steps. That&apos;s the whole thing.</h2>
+        <div className="iw-steps">
+          <div className="iw-step rough"><span className="n">1</span><h3>Post a wish</h3><p>Doodle it or describe it. The stuff you want in your life, big or small, silly or serious.</p></div>
+          <div className="iw-step rough"><span className="n">2</span><h3>Post what you have</h3><p>The things you&apos;ve got that others don&apos;t — a skill, an object, a place, an experience to share.</p></div>
+          <div className="iw-step rough"><span className="n">3</span><h3>Look at others</h3><p>Someone&apos;s wish is your have. Browse the wall, tap a card, and add any that you forget.</p></div>
+        </div>
+      </section>
+
+      <hr className="iw-rule" />
+
+      <section className="iw-section" id="types">
+        <p className="iw-kicker">THE TWO CARDS</p>
+        <h2>Everything here is one of two things.</h2>
+        <div className="iw-types">
+          <div className="iw-type-box dashed">
+            <div className="iw-type-ic">○</div>
+            <div>
+              <h3>I wish</h3>
+              <p>Dashed border = still a dream. The things you&apos;re hoping to find, learn, see, or be given someday.</p>
+            </div>
+          </div>
+          <div className="iw-type-box">
+            <div className="iw-type-ic">●</div>
+            <div>
+              <h3>I have</h3>
+              <p>Solid border = it&apos;s real. The things already in your life that you&apos;d happily share, lend, teach, or pass on.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="iw-strip">
+        <div className="iw-marquee">
+          <span className="w">learn to sail</span><span>a spare bike</span><span className="w">a pen pal in Japan</span><span>homemade sourdough starter</span><span className="w">see the northern lights</span><span>vintage vinyl records</span><span className="w">someone to fix my fence</span><span>a quiet desk to write at</span>
+          <span className="w">learn to sail</span><span>a spare bike</span><span className="w">a pen pal in Japan</span><span>homemade sourdough starter</span><span className="w">see the northern lights</span><span>vintage vinyl records</span><span className="w">someone to fix my fence</span><span>a quiet desk to write at</span>
+        </div>
+      </div>
+
+      <section className="iw-footer-cta" id="wall">
+        <h2>What do you wish for?</h2>
+        <p>Add it to the wall. Someone out there might already have it.</p>
+        <Link className="iw-btn primary" href="/auth/signup" style={{ fontSize: '24px', padding: '15px 40px' }}>Open the wall →</Link>
+      </section>
+
+      <footer className="iw-footer">
+        <Link className="iw-logo" href="/">
+          <span className="mark" style={{ width: '24px', height: '24px', fontSize: '15px' }}>★</span>IWish
+        </Link>
+        <span>
+          built by <a className="iw-footer-link" href="https://github.com/We1chJ" target="_blank" rel="noopener noreferrer">@We1chJ</a>
+          {' · '}
+          <a className="iw-footer-link iw-star-link" href="https://github.com/We1chJ/IWish" target="_blank" rel="noopener noreferrer">★ star on GitHub</a>
+        </span>
       </footer>
-    </div>
+    </>
   )
 }
