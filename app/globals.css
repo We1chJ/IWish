@@ -39,7 +39,7 @@ a { color: inherit; text-decoration: none; }
 .iw-header {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 26px 40px 36px;
+  padding: 22px 40px 22px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -82,7 +82,7 @@ a { color: inherit; text-decoration: none; }
 .iw-nav-cta {
   border: var(--line);
   border-radius: 40px;
-  padding: 6px 20px;
+  padding: 10px 22px;
   transform: rotate(-1.5deg);
 }
 .iw-nav-cta:hover {
