@@ -30,6 +30,8 @@ a { color: inherit; text-decoration: none; }
 .iw-header-wrap {
   background: var(--paper);
   border-bottom: var(--line);
+  position: relative;
+  z-index: 1;
 }
 .iw-header-wrap.sticky {
   position: sticky;
