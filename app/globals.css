@@ -39,7 +39,7 @@ a { color: inherit; text-decoration: none; }
 .iw-header {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 26px 40px 26px;
+  padding: 26px 40px 36px;
   display: flex;
   align-items: center;
   justify-content: space-between;
